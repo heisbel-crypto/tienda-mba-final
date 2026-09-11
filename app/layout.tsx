@@ -1,4 +1,5 @@
 import React from 'react';
+import { CartProvider } from '../context/CartContext';
 
 export const metadata = {
   title: 'Tienda MBA',
@@ -12,7 +13,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        <CartProvider>
+          {children}
+        </CartProvider>
+      </body>
     </html>
   );
 }
