@@ -3,7 +3,15 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
 
-const PRODUCTS = [
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+  description: string;
+}
+
+const PRODUCTS: Product[] = [
   {
     id: 1,
     title: 'Catálogo Exposición Museo de Bellas Artes',
@@ -30,6 +38,22 @@ const PRODUCTS = [
 export default function HomePage() {
   const { cart, addToCart } = useCart();
 
+  // Calcula el total de ítems acumulados en el carrito
+  const totalItems = cart ? cart.reduce((acc: number, item: any) => acc + (item.quantity || 1), 0) : 0;
+
+  const handleAddToCart = (product: Product) => {
+    try {
+      addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        quantity: 1
+      } as any);
+    } catch (err) {
+      console.error('Error al añadir al carrito:', err);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gray-100 p-8">
       <header className="max-w-6xl mx-auto mb-10 flex justify-between items-center bg-white p-6 rounded-lg shadow-sm">
@@ -37,31 +61,35 @@ export default function HomePage() {
           <h1 className="text-3xl font-bold text-gray-900">Tienda MBA</h1>
           <p className="text-gray-600 mt-1">Catálogo oficial del Museo de Bellas Artes</p>
         </div>
-        <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">
-          🛒 Carrito: {cart?.length || 0} ítems
+        <div className="bg-blue-600 text-white px-5 py-2.5 rounded-full font-semibold flex items-center gap-2 shadow-sm">
+          <span>🛒</span>
+          <span>Carrito:</span>
+          <span className="bg-white text-blue-600 px-2.5 py-0.5 rounded-full text-sm font-bold">
+            {totalItems}
+          </span>
         </div>
       </header>
 
       <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
         {PRODUCTS.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col justify-between">
+          <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col justify-between hover:shadow-lg transition-shadow">
             <img 
               src={product.image} 
               alt={product.title} 
               className="w-full h-48 object-cover"
             />
-            <div className="p-4 flex-1 flex flex-col justify-between">
+            <div className="p-5 flex-1 flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-bold text-gray-800">{product.title}</h3>
-                <p className="text-gray-600 text-sm mt-1">{product.description}</p>
+                <p className="text-gray-600 text-sm mt-2">{product.description}</p>
               </div>
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-6 flex items-center justify-between">
                 <span className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
                 <button
-                  onClick={() => addToCart(product as any)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                  onClick={() => handleAddToCart(product)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition-colors shadow-sm active:scale-95"
                 >
-                  Agregar
+                  Agregar al carrito
                 </button>
               </div>
             </div>
