@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import CartDrawer from '../components/CartDrawer';
 import { useCart } from '../context/CartContext';
 
 const PRODUCTS = [
@@ -29,7 +28,7 @@ const PRODUCTS = [
 ];
 
 export default function HomePage() {
-  const { addToCart } = useCart();
+  const { cart, addToCart } = useCart();
 
   return (
     <main className="min-h-screen bg-gray-100 p-8">
@@ -38,7 +37,9 @@ export default function HomePage() {
           <h1 className="text-3xl font-bold text-gray-900">Tienda MBA</h1>
           <p className="text-gray-600 mt-1">Catálogo oficial del Museo de Bellas Artes</p>
         </div>
-        <CartDrawer />
+        <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg font-semibold">
+          🛒 Carrito: {cart?.length || 0} ítems
+        </div>
       </header>
 
       <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -57,7 +58,7 @@ export default function HomePage() {
               <div className="mt-4 flex items-center justify-between">
                 <span className="text-xl font-bold text-gray-900">${product.price.toFixed(2)}</span>
                 <button
-                  onClick={() => addToCart({ id: product.id, title: product.title, price: product.price, quantity: 1 } as any)}
+                  onClick={() => addToCart(product as any)}
                   className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
                 >
                   Agregar
