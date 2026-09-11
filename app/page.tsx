@@ -6,21 +6,21 @@ import { useCart } from '../context/CartContext';
 
 const PRODUCTS = [
   {
-    id: '1',
+    id: 1,
     name: 'Catálogo Exposición Museo de Bellas Artes',
     price: 25.00,
     image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&q=80',
     description: 'Guía oficial de las obras exhibidas en la colección permanente.'
   },
   {
-    id: '2',
+    id: 2,
     name: 'Lámina de Arte Coleccionable',
     price: 15.00,
     image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500&q=80',
     description: 'Impresión de alta calidad en papel de grabado.'
   },
   {
-    id: '3',
+    id: 3,
     name: 'Libreta de Bocetos MBA',
     price: 10.00,
     image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=500&q=80',
