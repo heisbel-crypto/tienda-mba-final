@@ -1,5 +1,4 @@
 import React from 'react';
-import './globals.css'; // Asegura la carga de estilos Tailwind
 import { CartProvider } from '../context/CartContext';
 
 export const metadata = {
@@ -14,7 +13,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>
+      <head>
+        {/* Carga Tailwind CSS desde CDN para garantizar el diseño limpio sin errores de importación de archivos */}
+        <script src="https://cdn.tailwindcss.com"></script>
+      </head>
+      <body className="bg-gray-50 text-gray-900 min-h-screen">
         <CartProvider>
           {children}
         </CartProvider>
